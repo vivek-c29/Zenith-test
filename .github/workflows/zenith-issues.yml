@@ -1,0 +1,46 @@
+name: Zenith Issue Fixer
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  fix-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Clone & Install Zenith
+        run: |
+          git clone https://github.com/VedantGadge/Zenith.git /tmp/zenith
+          cd /tmp/zenith
+          pip install -r requirements.txt
+
+      - name: Configure Git for Zenith
+        run: |
+          git config --global user.name "Zenith Bot"
+          git config --global user.email "zenith-bot@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+
+      - name: Run Zenith on Issue
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYTHONPATH: /tmp/zenith
+        run: |
+          python -m zenith.cli \
+            --repo . \
+            --bug-report "Fixes #${{ github.event.issue.number }} - ${{ github.event.issue.title }}: ${{ github.event.issue.body }}"
