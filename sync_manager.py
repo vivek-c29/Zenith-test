@@ -1,3 +1,6 @@
+from pinecone_client import validate_data_format
+
+
 def sync_data(data):
     # Log the incoming data for debugging
     print(f"Syncing data: {data}")
