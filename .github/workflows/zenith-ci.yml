@@ -82,6 +82,7 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_MODEL: stealth/space-bunny-alpha
           PYTHONPATH: /tmp/zenith
         run: |
           cd ${{ github.workspace }}
