@@ -84,6 +84,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LLM_MODEL: stealth/space-bunny-alpha
           PYTHONPATH: /tmp/zenith
+
+          NEO4J_URI: ${{ secrets.NEO4J_URI }}
+          NEO4J_USERNAME: ${{ secrets.NEO4J_USERNAME }}
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
         run: |
           cd ${{ github.workspace }}
           python -m zenith.cli --repo . --test-command "python -m pytest -x -v" --base-branch main
