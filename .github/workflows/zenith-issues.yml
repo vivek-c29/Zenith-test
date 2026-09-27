@@ -25,7 +25,7 @@ jobs:
 
       - name: Clone & Install Zenith
         run: |
-          git clone https://github.com/VedantGadge/Zenith.git /tmp/zenith
+          git clone https://github.com/vivek-c29/Zenith.git /tmp/zenith
           cd /tmp/zenith
           pip install -r requirements.txt
 
@@ -39,6 +39,10 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_MODEL: stealth/space-bunny-alpha
+          NEO4J_URI: ${{ secrets.NEO4J_URI }}
+          NEO4J_USERNAME: ${{ secrets.NEO4J_USERNAME }}
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
           PYTHONPATH: /tmp/zenith
         run: |
           python -m zenith.cli \
